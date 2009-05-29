@@ -1,0 +1,30 @@
+<project name="AdamsGame" default="compile">
+ 
+	<property environment="env"/>
+	<property name="FLEX_HOME" value="${env.FLEX_HOME}"/>
+	<property name="SRC_DIR" value="${basedir}/src"/>
+	<property name="LIB_DIR" value="${basedir}/lib"/>
+	<property name="DEPLOY_DIR" value="${basedir}/bin"/>
+
+	<taskdef resource="flexTasks.tasks" classpath="${LIB_DIR}/flexTasks.jar"/> 
+	
+	<target name="init">
+		<mkdir dir="${DEPLOY_DIR}"/>		
+	</target>
+	
+	<target name="compile" depends="init">
+		<mxmlc file="${SRC_DIR}/main.mxml" output="${DEPLOY_DIR}/${ant.project.name}.swf">
+	        <load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
+	        <source-path path-element="${FLEX_HOME}/frameworks"/>
+			<compiler.debug>false</compiler.debug>			
+		</mxmlc>
+	</target>
+
+	<target name="run">
+		<exec executable="${FLEX_HOME}\runtimes\player\10\win\FlashPlayer.exe"
+			spawn="true">
+			<arg value="bin\${ant.project.name}.swf"/>
+		</exec>
+	</target>
+
+</project>
